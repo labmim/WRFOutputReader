@@ -1,0 +1,61 @@
+{
+	"time": {
+        "netcdf_format": "YYYY-MM-DD_HH:mm:ss",
+		"format": "DD/MM/YYYY (dddd) HH:mm:ss",
+        "locale": "pt_br",
+		"timezone": "America/Bahia"
+	},
+	"variables": {
+		"latitude": "XLAT",
+		"longitude": "XLON",
+		"temperture": "T2",
+		"pressure": "PSFC",
+		"wind_u": "U10",
+		"wind_v": "V10",
+		"water_vapor": "Q2",
+		"time": "Times"
+	},
+	"temperature": {
+		"colormap": "jet",
+		"modifier": -273.15,
+		"modifier_operation": "add",
+		"colorbar": {
+			"label": "Temperatura",
+			"font-size": 10,
+			"labelpad": 10
+		},
+		"filename_extension": "_temperature"
+	},
+	"wind": {
+		"colormap": "PuBu",
+		"colorbar": {
+			"label": "Velocidade do Vento",
+			"font-size": 10,
+			"labelpad": 10
+		},
+		"filename_extension": "_wind"
+	},
+    "water_vapor": {
+		"colormap": "jet_r",
+        "modifier": 1000,
+		"modifier_operation": "multiply",
+		"colorbar": {
+			"label": "Umidade",
+			"font-size": 10,
+			"labelpad": 10
+		},
+		"filename_extension": "_qvapor"
+	},
+	"pressure": {
+		"colormap": "YlOrRd",
+		"modifier": 100,
+		"modifier_operation": "divide",
+		"colorbar": {
+			"label": "Pressão",
+			"font-size": 10,
+			"labelpad": 10
+		},
+		"filename_extension": "_pressure"
+	}
+
+}
