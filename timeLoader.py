@@ -8,7 +8,7 @@ from settings import settings
 
 # dataset variables in come
 
-dataset = netCDF4.Dataset('/home/eowfenth/Workspaces/Scientific/project/input/wrfout_d02_2017-02-16_00_00_00')
+dataset = netCDF4.Dataset('/Users/nicolasdecordi/Nicolas/WRFOutputReader/input/wrfout_d03_2017-03-11.nc')
 times_array = dataset.variables['Times'][:]
 
 """
@@ -37,6 +37,7 @@ def organizeAnalysisDate(dateString):
     #currentSeconds = strDate[17:]
 
     # -- Instanciate an aware Arrow object
+    print(currentDay, currentMonth, currentYear)
     currentDate = arrow.Arrow(\
 				int(currentYear), \
 				int(currentMonth), \

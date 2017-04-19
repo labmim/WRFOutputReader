@@ -1,4 +1,17 @@
 {
+	"settings": {
+		"file_information":{
+			"separator": "_",
+			"base": "wrfout",
+			"grade": "d",
+			"date": "YYYY-MM-DD",
+			"extension": ".nc"
+		},
+		"location":{
+			"input":"/Users/nicolasdecordi/Nicolas/WRFOutputReader/input/",
+			"output":"/Users/nicolasdecordi/Nicolas/WRFOutputReader/output/"
+		}
+	},
 	"time": {
         "netcdf_format": "YYYY-MM-DD_HH:mm:ss",
 		"format": "DD/MM/YYYY (dddd) HH:mm:ss",

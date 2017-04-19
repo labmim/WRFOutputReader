@@ -24,7 +24,9 @@ from settings import settings
 
 """
 time = settings['time']
-dataset = netCDF4.Dataset('/home/eowfenth/Workspaces/Scientific/project/input/wrfout_d02_2017-02-16_00_00_00')
+dataset = netCDF4.Dataset('/Users/nicolasdecordi/Nicolas/WRFOutputReader/input/wrfout_d03_2017-03-11.nc')
+
+
 xlat = dataset.variables['XLAT'][:,:,:]
 xlong = dataset.variables['XLONG'][:,:,:]
 temperature = []; lat = []; lon = []
@@ -100,23 +102,23 @@ def generateGraphs(variable, token = 0):
             m.drawcoastlines()
 #            m.drawparallels(np.arange(-13.1336, -12.6928, 0.06), linewidth=0, labels=[1,0,0,1], color='r', zorder=0, fmt="%.2f")
 #            m.drawmeridians(np.arange(-38.7334, -38.2808, 0.07), linewidth=0, labels=[1,0,0,1], color='r', zorder=0, fmt="%.2f" )
-            m.drawparallels(np.arange(llat, hlat, 1.1), linewidth=0, labels=[1,0,0,1], color='r', zorder=0, fmt="%.2f")
-            m.drawmeridians(np.arange(llong, hlong, 1.3), linewidth=0, labels=[1,0,0,1], color='r', zorder=0, fmt="%.2f" )
-#            m.drawparallels(np.arange(llat, hlat, 0.09), linewidth=0, labels=[1,0,0,1], color='r', zorder=0, fmt="%.2f")
-#            m.drawmeridians(np.arange(llong, hlong, 0.13), linewidth=0, labels=[1,0,0,1], color='r', zorder=0, fmt="%.2f" )
+#            m.drawparallels(np.arange(llat, hlat, 1.1), linewidth=0, labels=[1,0,0,1], color='r', zorder=0, fmt="%.2f")
+#            m.drawmeridians(np.arange(llong, hlong, 1.3), linewidth=0, labels=[1,0,0,1], color='r', zorder=0, fmt="%.2f" )
+            m.drawparallels(np.arange(llat, hlat, 0.09), linewidth=0, labels=[1,0,0,1], color='r', zorder=0, fmt="%.2f")
+            m.drawmeridians(np.arange(llong, hlong, 0.13), linewidth=0, labels=[1,0,0,1], color='r', zorder=0, fmt="%.2f" )
             plt.title(title, fontsize = 12, ha = 'left', x = -0.01)
             plt.suptitle("$^\circ\mathcal{C}$", fontsize = 18, ha = 'center', x = 0.79, y = 0.75)
             plt.xlabel('Longitude', fontsize = 12, labelpad = 25)
             plt.ylabel('Latitude', fontsize = 12, labelpad = 60)
 #            plt.show()
-            plt.savefig('/home/eowfenth/Workspaces/Scientific/project/output/d01_2017-02-16/Temperatura/' + CorrectNumberInFileName(i) + '.png', bbox_inches='tight')
+            plt.savefig('/Users/nicolasdecordi/Nicolas/WRFOutputReader/output/d03_2017-03-11/Temperatura/' + CorrectNumberInFileName(i) + '.png', bbox_inches='tight')
             plt.close()
         if (dataset):
             dataset.close()
     elif (variable == "Pressure"):
         var = dataset.variables['PSFC'][:,:,:].squeeze()
 
-        for i in range(0, 97):
+        for i in range(1, 97):
             forecast = date[i].format(time['format'], locale=time['locale'])
             title = " " + model + " — " + lab + "\n Início Análise: " + analysis + " (UTC)"+ "\n Previsão: " + forecast + " HL"
 
@@ -154,7 +156,7 @@ def generateGraphs(variable, token = 0):
         u10 = dataset.variables['U10'][:].squeeze()
         v10 = dataset.variables['V10'][:].squeeze()
 
-        for i in range(1, 33):
+        for i in range(1, 97):
             forecast = date[i].format(time['format'], locale=time['locale'])
             title = " " + model + " — " + lab + "\n Início Análise: " + analysis + " (UTC)"+ "\n Previsão: " + forecast + " HL" + " — " + "Velocidade do Vento (10 m)"
             u = u10[i:i+1,:,:].squeeze()
@@ -215,14 +217,14 @@ def generateGraphs(variable, token = 0):
             m.drawcoastlines()
 #            m.drawparallels(np.arange(-13.1336, -12.6928, 0.06), linewidth=0, labels=[1,0,0,1], color='r', zorder=0, fmt="%.2f")
 #            m.drawmeridians(np.arange(-38.7334, -38.2808, 0.07), linewidth=0, labels=[1,0,0,1], color='r', zorder=0, fmt="%.2f" )
-#            m.drawparallels(np.arange(llat, hlat, 0.09), linewidth=0, labels=[1,0,0,1], color='r', zorder=0, fmt="%.2f")
-#            m.drawmeridians(np.arange(llong, hlong, 0.13), linewidth=0, labels=[1,0,0,1], color='r', zorder=0, fmt="%.2f" )
-            m.drawparallels(np.arange(llat, hlat, 1.1), linewidth=0, labels=[1,0,0,1], color='r', zorder=0, fmt="%.2f")
-            m.drawmeridians(np.arange(llong, hlong, 1.3), linewidth=0, labels=[1,0,0,1], color='r', zorder=0, fmt="%.2f" )
+            m.drawparallels(np.arange(llat, hlat, 0.09), linewidth=0, labels=[1,0,0,1], color='r', zorder=0, fmt="%.2f")
+            m.drawmeridians(np.arange(llong, hlong, 0.13), linewidth=0, labels=[1,0,0,1], color='r', zorder=0, fmt="%.2f" )
+#            m.drawparallels(np.arange(llat, hlat, 1.1), linewidth=0, labels=[1,0,0,1], color='r', zorder=0, fmt="%.2f")
+#            m.drawmeridians(np.arange(llong, hlong, 1.3), linewidth=0, labels=[1,0,0,1], color='r', zorder=0, fmt="%.2f" )
             plt.title(title, fontsize = 12, ha = 'left', x = -0.01)
             plt.xlabel('Longitude', fontsize = 12, labelpad = 25)
             plt.ylabel('Latitude', fontsize = 12, labelpad = 60)
-            plt.savefig('/home/eowfenth/Workspaces/Scientific/project/output/d01_2017-02-16/Vento/' + CorrectNumberInFileName(i) + '.png', bbox_inches='tight')
+            plt.savefig('/Users/nicolasdecordi/Nicolas/WRFOutputReader/output/d03_2017-03-11/Vento/' + CorrectNumberInFileName(i) + '.png', bbox_inches='tight')
 #            plt.show()
             plt.close()
     elif (variable == "Vapor"):
@@ -265,7 +267,7 @@ def generateGraphs(variable, token = 0):
             plt.xlabel('Longitude', fontsize = 12, labelpad = 25)
             plt.ylabel('Latitude', fontsize = 12, labelpad = 60)
 #            plt.show()
-            plt.savefig('/home/eowfenth/Workspaces/Scientific/project/output/d02_2017-02-16/Umidade/' + CorrectNumberInFileName(i) + '.png', bbox_inches='tight')
+            plt.savefig('/Users/nicolasdecordi/Nicolas/WRFOutputReader/output/d03_2017-03-11/Umidade/' + CorrectNumberInFileName(i) + '.png', bbox_inches='tight')
 
             plt.close()
         if (dataset):
@@ -309,4 +311,4 @@ def generateGraphs(variable, token = 0):
 #    if (dataset):
 #        dataset.close()
 #
-generateGraphs('Vapor')
+generateGraphs('Temperature')
