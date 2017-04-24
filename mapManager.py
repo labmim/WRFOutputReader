@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from settings import settings
 from timeLoader import date, analysis
 import fileManager
+import numpy as np
 
 time = settings['time']
 OUTPUT_PATH = settings['settings']['location']['output']
@@ -54,3 +55,28 @@ def CorrectNumberInFileName(index):
     elif (index >= 10 and index <= 99):
         return "0" + str(index)
     return str(index)
+
+
+# /*
+# Define os meridianos
+# */
+
+def makeMeridians(grade):
+    if (grade == "d01"):
+        return np.arange(llong, hlong, 1.3)
+    elif (grade == "d02"):
+        return np.arange(llong, hlong, 0.13)
+    else:
+        return np.arange(-38.7334, -38.2808, 0.07)
+
+# /*
+# Define os paralelos
+# */
+
+def makeParallels(grade):
+    if (grade == "d01"):
+        return np.arange(llat, hlat, 1.1)
+    elif (grade == "d02"):
+        return np.arange(llat, hlat, 0.09)
+    else:
+        return np.arange(-13.1336, -12.6928, 0.06)

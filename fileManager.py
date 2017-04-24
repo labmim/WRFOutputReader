@@ -74,32 +74,45 @@ def getGradeSize():
     grade = currentFile[7:10]
     return grade
 
-def createTodayDir():
-    path = OUTPUT_PATH + getGradeSize() + "_" + getTodayDate()
-    if not os.path.exists(path):
-        os.makedirs(path)
-    return
-createTodayDir()
-
 # /*
-#   Gera um caminho para salvar os gráficos
+#  Gera um caminho para salvar os gráficos
 # */
 
-def getSavePath(variable):
-    
-    path = OUTPUT_PATH + 
-    # Path para arquivo salvo é:
-    #
-    # Path configurado no script.json
-    # +
-    # Path da data do arquivo
-    # + 
-    # Path da grade do arquivo
-    # +
-    # Path da variável de execução
-    
-    #OUTPUT_PATH
-    #getTodayDateFile()
-    #getGradeSize()
-    #variable
+def getSavePath(variable, grade):
+    date = obtainDateFromFileName(getTodayFileName())
+    path = OUTPUT_PATH + \
+            date + "/" + \
+            getGradeSize() + '/' + \
+            variable + "/"
+    if not os.path.exists(path):
+        os.makedirs(path)
     return path
+
+# /*
+#   Gera um número de arquivo adequado
+#   no formato "0XX.png""
+# */
+
+def correctNumberInFileName(index):
+    if (index < 10):
+        return "00" + str(index)
+    elif (index >= 10 and index <= 99):
+        return "0" + str(index)
+    return str(index)
+
+# /*
+#   Gera um nome para o arquivo
+# */
+
+# variable + _ + grade + data + .png
+def getSaveFileName(variable, index, grade):
+    saveName = variable + "_" + grade + "_" + \
+    correctNumberInFileName(index) + ".png"
+    return saveName
+
+# /*
+#   Gera um log informativo
+# */
+
+def generateLog(variable, index, grade):
+    print("Generating figure no. " + str(index) + " from " + variable + "/" + grade)

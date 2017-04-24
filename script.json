@@ -1,4 +1,7 @@
 {
+	"main": {
+		"variables": ["temperature", "pressure", "wind", "vapor"]
+	},
 	"settings": {
 		"file_information":{
 			"separator": "_",
@@ -8,8 +11,8 @@
 			"extension": ".nc"
 		},
 		"location":{
-			"input":"/Users/nicolasdecordi/Nicolas/WRFOutputReader/input/",
-			"output":"/Users/nicolasdecordi/Nicolas/WRFOutputReader/output/"
+			"input":"/home/nohaleh/research/WRFOutputReader/input/",
+			"output":"/home/nohaleh/research/WRFOutputReader/output/"
 		},
 		"title_information": {
 			"lab": "LabMiM/LMAC (UFBA)",
@@ -79,6 +82,7 @@
 		"filename_extension": "_qvapor"
 	},
 	"pressure": {
+		"title": "Pressão Atmosférica (Nível do Mar)",
 		"colormap": "YlOrRd",
 		"modifier": 100,
 		"modifier_operation": "divide",

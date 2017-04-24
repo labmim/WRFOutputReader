@@ -27,29 +27,15 @@ import mapManager
 
 
 """
-time = settings['time']
-dataset = netCDF4.Dataset(fileManager.getTodayFilePath())
 
 # /*
 #   A partir da grade, define determinadas configurações da projeção do mapa
 # */
 
+datasetFile = fileManager.getTodayFilePath()
 grade = fileManager.getGradeSize()
-
-def makeMeridians(grade):
-    if (grade == "d01"):
-        return np.arange(llong, hlong, 1.3)
-    elif (grade == "d02"):
-        return np.arange(llong, hlong, 0.13)
-    else:
-        return np.arange(-38.7334, -38.2808, 0.07)
-def makeParallels(grade):
-    if (grade == "d01"):
-        return np.arange(llat, hlat, 1.1)
-    elif (grade == "d02"):
-        return np.arange(llat, hlat, 0.09)
-    else:
-        return np.arange(-13.1336, -12.6928, 0.06)
+time = settings['time']
+dataset = netCDF4.Dataset(datasetFile)
 
 xlat = dataset.variables['XLAT'][:,:,:]
 xlong = dataset.variables['XLONG'][:,:,:]
@@ -59,22 +45,15 @@ lat = xlat[:1, :, :].squeeze()
 hlat, llat = np.amax(xlat), np.amin(xlat)
 hlong, llong = np.amax(xlong), np.amin(xlong)
 
-#lon2 = coordenatesManager.getLongitude()
-#lat2 = coordenatesManager.getLatitude()
-#hlat2, llat = coordenatesManager.getMaxMinFromLatitude()
-#hlong, llong = coordenatesManager.getMaxMinFromLongitude() 
-
 def getLowerValue(variable):
     varflat = variable.flatten()
     varlow = np.amin(varflat)
-    print(varlow)
     return varlow
 
 
 def getHigherValue(variable):
     varflat = variable.flatten()
     varhigh = np.amax(varflat)
-    print(varhigh)
     return varhigh
 
 def getLowerWindValue(variable, variable2):
@@ -82,7 +61,6 @@ def getLowerWindValue(variable, variable2):
     var2flat = variable2.flatten()
     speedflat = np.sqrt(var1flat*var1flat + var2flat*var2flat)
     varlow = np.amin(speedflat)
-    print(varlow)
     return varlow
 
 def getHigherWindValue(variable, variable2):
@@ -90,15 +68,12 @@ def getHigherWindValue(variable, variable2):
     var2flat = variable2.flatten()
     speedflat = np.sqrt(var1flat*var1flat + var2flat*var2flat)
     varhigh = np.amax(speedflat)
-    print(varhigh)
     return varhigh
 
 def generateGraphs(variable, token = 0):
     
     if (variable == "temperature"):        
         var = dataset.variables['T2'][:,:,:].squeeze()
-        # Necessário consertar o path do arquivo salvo
-            
         for i in range(1, len(date)):
             
             # Settings
@@ -134,13 +109,13 @@ def generateGraphs(variable, token = 0):
             m = mapManager.createMap(llong, hlong, llat, hlat)
             x,y = m(lon, lat)
             m.drawcoastlines()
-            m.drawparallels(makeParallels(grade), 
+            m.drawparallels(mapManager.makeParallels(grade), 
                             linewidth=0, 
                             labels=[1,0,0,1], 
                             color='r', 
                             zorder=0, 
                             fmt="%.2f")
-            m.drawmeridians(makeMeridians(grade), 
+            m.drawmeridians(mapManager.makeMeridians(grade), 
                             linewidth=0, 
                             labels=[1,0,0,1], 
                             color='r', 
@@ -162,46 +137,93 @@ def generateGraphs(variable, token = 0):
             cb.ax.tick_params(labelsize=10)       
             
             #plt.show()
-            plt.savefig('/Users/nicolasdecordi/Nicolas/WRFOutputReader/output/d03_2017-03-11/Temperatura/' + CorrectNumberInFileName(i) + '.png', bbox_inches='tight')
-            #plt.savefig(mapManager.getSavePath('temperature', i), bbox_inches='tight')
+            
+            # Log
+            
+            fileManager.generateLog('temperature', i, grade)
+            # Saving Settings
+            
+            path = fileManager.getSavePath('temperature', grade)
+            fileName = fileManager.getSaveFileName('temperature', i, grade)
+            
+            plt.savefig(path + fileName, bbox_inches='tight')
             plt.close()
         if (dataset):
             dataset.close()
             
-    elif (variable == "Pressure"):
+    elif (variable == "pressure"):
         var = dataset.variables['PSFC'][:,:,:].squeeze()
+        for i in range(1, len(date)):
 
-        for i in range(1, 97):
-            forecast = date[i].format(time['format'], locale=time['locale'])
-            title = " " + model + " — " + lab + "\n Início Análise: " + analysis + " (UTC)"+ "\n Previsão: " + forecast + " HL"
+            # Settings
 
             colormap = settings['pressure']['colormap']
             varmax = getHigherValue(var) / 100
             varmin = getLowerValue(var) / 100
-            print(varmax, varmin)
+            mbar = var[i:i+1,:,:] / 100
+
+
+            # Plot Setings
             plt.figure(figsize=(18,9))
-            m = Basemap(rsphere=(6378137.00,6356752.3142),\
-                    resolution='h',area_thresh=0.1,projection='merc',\
-                    llcrnrlon= llong, llcrnrlat= llat,
-                    urcrnrlon= hlong, urcrnrlat= hlat)
+            title = mapManager.createTitle('pressure', i)
+            plt.title(title, 
+                        fontsize = 12, 
+                        ha = 'left', 
+                        x = -0.01)
+            plt.suptitle("$\mathcal{mBar}$", 
+                        fontsize = 18, 
+                        ha = 'center', 
+                        x = 0.79, 
+                        y = 0.75)
+            plt.xlabel('Longitude', 
+                        fontsize = 12, 
+                        labelpad = 25)
+            plt.ylabel('Latitude', 
+                        fontsize = 12, 
+                        labelpad = 60)
+
+            # Map Settings
+            m = mapManager.createMap(llong, hlong, llat, hlat)
             x,y = m(lon, lat)
-            fix = var[i:i+1,:,:] / 100
-            m.contourf(x, y, np.squeeze(fix), alpha = 0.4, cmap = colormap)#, vmin=varmin, vmax=varmax)
-            m.pcolor(x,y,np.squeeze(fix), alpha = 0.4,cmap = colormap)#, vmin=varmin, vmax=varmax)
-            #cbar = m.colorbar(cs, location='right')
-            #cNorm = mpl.colors.Normalize(vmin=varmin, vmax=varmax)
-            #cs.set_norm(cNorm)
+            m.drawcoastlines()
+            m.drawparallels(mapManager.makeParallels(grade), 
+                            linewidth=0, 
+                            labels=[1,0,0,1], 
+                            color='r', 
+                            zorder=0, 
+                            fmt="%.2f")
+            m.drawmeridians(mapManager.makeMeridians(grade), 
+                            linewidth=0, 
+                            labels=[1,0,0,1], 
+                            color='r', 
+                            zorder=0, 
+                            fmt="%.2f")
+            m.contourf(x, y, np.squeeze(mbar), 
+                            alpha = 0.4, 
+                            cmap = colormap, 
+                            vmin=varmin, 
+                            vmax=varmax)
+            m.pcolor(x,y,np.squeeze(mbar), 
+                            alpha = 0.4,
+                            cmap = colormap, 
+                            vmin=varmin, 
+                            vmax=varmax)
+
+            # Colorbar Settings
             cb = plt.colorbar(shrink=0.5, pad=0.04)
             cb.ax.tick_params(labelsize=10)
-            cb.set_label('Pressão', fontsize = 10, labelpad = 10)
-            m.drawcoastlines()
-            m.drawparallels(np.arange(-13.1336, -12.6928, 0.06), linewidth=0, labels=[1,0,0,1], color='r', zorder=0, fmt="%.2f")
-            m.drawmeridians(np.arange(-38.7334, -38.2808, 0.07), linewidth=0, labels=[1,0,0,1], color='r', zorder=0, fmt="%.2f" )
-            plt.title(title, fontsize = 12, ha = 'left', x = -0.01)
-            plt.suptitle("$\mathrm{mBar}$", fontsize = 18, ha = 'center', x = 0.79, y = 0.75)
-            plt.xlabel('Longitude', fontsize = 12, labelpad = 25)
-            plt.ylabel('Latitude', fontsize = 12, labelpad = 60)
-            plt.show()
+
+            # plt.show()
+
+            # Log
+            
+            fileManager.generateLog('pressure', i, grade)
+            # Saving Settings
+            
+            path = fileManager.getSavePath('pressure', grade)
+            fileName = fileManager.getSaveFileName('pressure', i, grade)
+            
+            plt.savefig(path + fileName, bbox_inches='tight')
             plt.close()
         if (dataset):
             dataset.close()
@@ -364,4 +386,4 @@ def generateGraphs(variable, token = 0):
 #    if (dataset):
 #        dataset.close()
 #
-generateGraphs('temperature')
+generateGraphs('pressure')
