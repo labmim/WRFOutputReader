@@ -4,29 +4,11 @@ from settings import settings
 variables = settings['variables']
 
 # /*
-#   Obtém dataset de latitude
-# */
-
-def getLatitudeByDataset(dataset):
-    latitude = dataset.variables[variables['latitude']]
-    return latitude
-latitude = getLatitudeByDataset(dataset)
-
-# /*
-#   Obtém dataset de longitude
-# */
-
-def getLongitudeByDataset(dataset):
-    latitude = dataset.variables[variables['longitude']]
-    return longitude
-longitude = getLongitudeByDataset(dataset)
-
-# /*
 #   Obtém latitude
 # */
 
 def getLatitude():
-    latitude = variables['latitude']
+    latitude = dataset.variables[variables['latitude']]
     lat = latitude[:1, :, :].squeeze()
     return lat
 
@@ -35,7 +17,7 @@ def getLatitude():
 # */
 
 def getLongitude():
-    longitude = variables['longitude']
+    longitude = dataset.variables[variables['longitude']]
     lon = longitude[:1, :, :].squeeze()
     return lon
 

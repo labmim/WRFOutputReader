@@ -80,3 +80,26 @@ def createTodayDir():
         os.makedirs(path)
     return
 createTodayDir()
+
+# /*
+#   Gera um caminho para salvar os gráficos
+# */
+
+def getSavePath(variable):
+    
+    path = OUTPUT_PATH + 
+    # Path para arquivo salvo é:
+    #
+    # Path configurado no script.json
+    # +
+    # Path da data do arquivo
+    # + 
+    # Path da grade do arquivo
+    # +
+    # Path da variável de execução
+    
+    #OUTPUT_PATH
+    #getTodayDateFile()
+    #getGradeSize()
+    #variable
+    return path

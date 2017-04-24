@@ -18,6 +18,8 @@ import mapManager
 #from settings import settings
 #import settings
 
+#import Utilities as utils
+
 """
 
     As variáveis de tempo vão estar disponíveis
