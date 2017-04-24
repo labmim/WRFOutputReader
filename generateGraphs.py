@@ -95,32 +95,57 @@ def generateGraphs(variable, token = 0):
     
     if (variable == "temperature"):        
         var = dataset.variables['T2'][:,:,:].squeeze()
+        
+        # Necessário corrigido o teto no loop
+        # Necessário consertar o path do arquivo salvo
+            
         for i in range(1, 97):
-            colormap = settings['temperature']['colormap']
+            
+            # Settings
+            
             varmax = getHigherValue(var) - 273.15
             varmin = getLowerValue(var) - 273.15
-            print(varmax, varmin)
-            title = mapManager.createTitle('temperature', i)
+            celcius = var[i:i+1,:,:] - 273.15 
+            colormap = settings['temperature']['colormap']  
+            
+            # Plot Settings
+            
             plt.figure(figsize=(18,9))
+            title = mapManager.createTitle('temperature', i)
+            plt.title(title, 
+                      fontsize = 12, 
+                      ha = 'left', 
+                      x = -0.01)
+            
+            plt.suptitle("$^\circ\mathcal{C}$",
+                         fontsize = 18, 
+                         ha = 'center', 
+                         x = 0.79, 
+                         y = 0.75)
+            plt.xlabel('Longitude', 
+                       fontsize = 12, 
+                       labelpad = 25)
+            plt.ylabel('Latitude', 
+                       fontsize = 12, 
+                       labelpad = 60)
+            
+            # Map Settings
+            
             m = mapManager.createMap(llong, hlong, llat, hlat)
             x,y = m(lon, lat)
-            fix = var[i:i+1,:,:] - 273.15
-            m.contourf(x, y, np.squeeze(fix), alpha = 0.4, cmap = colormap, vmin=varmin, vmax=varmax)
-            m.pcolor(x,y,np.squeeze(fix), alpha = 0.4,cmap = colormap, vmin=varmin, vmax=varmax)
-            cb = plt.colorbar(shrink=0.5, pad=0.04)
-            cb.ax.tick_params(labelsize=10)
-            
-            # Draw informations to the map
             m.drawcoastlines()
             m.drawparallels(makeParallels(grade), linewidth=0, labels=[1,0,0,1], color='r', zorder=0, fmt="%.2f")
             m.drawmeridians(makeMeridians(grade), linewidth=0, labels=[1,0,0,1], color='r', zorder=0, fmt="%.2f")
-            plt.title(title, fontsize = 12, ha = 'left', x = -0.01)
-            plt.suptitle("$^\circ\mathcal{C}$", fontsize = 18, ha = 'center', x = 0.79, y = 0.75)
-            plt.xlabel('Longitude', fontsize = 12, labelpad = 25)
-            plt.ylabel('Latitude', fontsize = 12, labelpad = 60)
-#            plt.show()
-#            plt.savefig('/Users/nicolasdecordi/Nicolas/WRFOutputReader/output/d03_2017-03-11/Temperatura/' + CorrectNumberInFileName(i) + '.png', bbox_inches='tight')
-            plt.savefig(mapManager.getSavePath('temperature', i), bbox_inches='tight')
+            m.contourf(x, y, np.squeeze(celcius), alpha = 0.4, cmap = colormap, vmin=varmin, vmax=varmax)
+            m.pcolor(x,y,np.squeeze(celcius), alpha = 0.4,cmap = colormap, vmin=varmin, vmax=varmax)
+            
+            # Colorbar Settings
+            cb = plt.colorbar(shrink=0.5, pad=0.04)
+            cb.ax.tick_params(labelsize=10)       
+            
+            #plt.show()
+            plt.savefig('/Users/nicolasdecordi/Nicolas/WRFOutputReader/output/d03_2017-03-11/Temperatura/' + CorrectNumberInFileName(i) + '.png', bbox_inches='tight')
+            #plt.savefig(mapManager.getSavePath('temperature', i), bbox_inches='tight')
             plt.close()
         if (dataset):
             dataset.close()
