@@ -6,12 +6,7 @@ import fileManager
 
 time = settings['time']
 OUTPUT_PATH = settings['settings']['location']['output']
-# /*
-# Instancia plot
-# */
 
-def createPlot():
-    pass
 # /*
 # Instancia um mapa
 # */

@@ -95,11 +95,9 @@ def generateGraphs(variable, token = 0):
     
     if (variable == "temperature"):        
         var = dataset.variables['T2'][:,:,:].squeeze()
-        
-        # Necessário corrigido o teto no loop
         # Necessário consertar o path do arquivo salvo
             
-        for i in range(1, 97):
+        for i in range(1, len(date)):
             
             # Settings
             
@@ -134,10 +132,28 @@ def generateGraphs(variable, token = 0):
             m = mapManager.createMap(llong, hlong, llat, hlat)
             x,y = m(lon, lat)
             m.drawcoastlines()
-            m.drawparallels(makeParallels(grade), linewidth=0, labels=[1,0,0,1], color='r', zorder=0, fmt="%.2f")
-            m.drawmeridians(makeMeridians(grade), linewidth=0, labels=[1,0,0,1], color='r', zorder=0, fmt="%.2f")
-            m.contourf(x, y, np.squeeze(celcius), alpha = 0.4, cmap = colormap, vmin=varmin, vmax=varmax)
-            m.pcolor(x,y,np.squeeze(celcius), alpha = 0.4,cmap = colormap, vmin=varmin, vmax=varmax)
+            m.drawparallels(makeParallels(grade), 
+                            linewidth=0, 
+                            labels=[1,0,0,1], 
+                            color='r', 
+                            zorder=0, 
+                            fmt="%.2f")
+            m.drawmeridians(makeMeridians(grade), 
+                            linewidth=0, 
+                            labels=[1,0,0,1], 
+                            color='r', 
+                            zorder=0, 
+                            fmt="%.2f")
+            m.contourf(x, y, np.squeeze(celcius), 
+                            alpha = 0.4, 
+                            cmap = colormap, 
+                            vmin=varmin, 
+                            vmax=varmax)
+            m.pcolor(x,y,np.squeeze(celcius), 
+                            alpha = 0.4,
+                            cmap = colormap, 
+                            vmin=varmin, 
+                            vmax=varmax)
             
             # Colorbar Settings
             cb = plt.colorbar(shrink=0.5, pad=0.04)
