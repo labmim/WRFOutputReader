@@ -4,11 +4,13 @@ import numpy as np
 
 # Dependencies
 from settings import settings
+import fileManager
 
 
 # dataset variables in come
 
-dataset = netCDF4.Dataset('/Users/nicolasdecordi/Nicolas/WRFOutputReader/input/wrfout_d03_2017-03-11.nc')
+dataset = netCDF4.Dataset(fileManager.getTodayFilePath())
+
 times_array = dataset.variables['Times'][:]
 
 """

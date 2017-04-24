@@ -10,6 +10,24 @@
 		"location":{
 			"input":"/Users/nicolasdecordi/Nicolas/WRFOutputReader/input/",
 			"output":"/Users/nicolasdecordi/Nicolas/WRFOutputReader/output/"
+		},
+		"title_information": {
+			"lab": "LabMiM/LMAC (UFBA)",
+			"model" : "WRF V3"
+		},
+		"grades": {
+			"d01": {
+				"parallels_spacing": 1.1,
+				"meridians_spacing": 1.3
+			},
+			"d02": {
+				"parallels_spacing": 0.09,
+				"meridians_spacing": 0.13
+			},
+			"d03": {
+				"parallels_spacing": 0.06,
+				"meridians_spacing": 0.07
+			}
 		}
 	},
 	"time": {
@@ -29,6 +47,7 @@
 		"time": "Times"
 	},
 	"temperature": {
+		"title": "Temperatura (2 m)",
 		"colormap": "jet",
 		"modifier": -273.15,
 		"modifier_operation": "add",
