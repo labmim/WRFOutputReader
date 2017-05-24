@@ -1,6 +1,7 @@
 {
 	"main": {
-		"variables": ["temperature", "pressure", "wind", "vapor"]
+		"variables": ["temperature", "pressure", "wind", "vapor"],
+         "grades": ["d01", "d02", "d03"]
 	},
 	"settings": {
 		"file_information":{
@@ -11,8 +12,8 @@
 			"extension": ".nc"
 		},
 		"location":{
-			"input":"/home/nohaleh/research/WRFOutputReader/input/",
-			"output":"/home/nohaleh/research/WRFOutputReader/output/"
+			"input":"/home/edson/d-wrf-op/WRFV3/test/em_real/",
+			"output":"/home/edson/Projetos/WRFOutputReader/output/"
 		},
 		"title_information": {
 			"lab": "LabMiM/LMAC (UFBA)",

@@ -5,6 +5,7 @@ import arrow
 # Constants
 INPUT_PATH = settings['settings']['location']['input']
 OUTPUT_PATH = settings['settings']['location']['output']
+FILE_INFORMATION = settings['settings']['file_information']
 
 # Verificar a data de hoje
 
@@ -26,8 +27,11 @@ def listFiles(path):
     ncList = []
     fileList = os.listdir(path)
     for file in fileList:
-        if file[-3:] == ".nc":
+#        if file[-3:] == ".nc":
+#            ncList.append(file)
+        if file[0:6] == FILE_INFORMATION['base']:
             ncList.append(file)
+    ncList.sort()
     return ncList
 
 # /*
@@ -47,21 +51,23 @@ def obtainDateFromFileName(givenFile):
 #   do contrário, retorna o último
 # */
 
-def getTodayFileName():
+def getCurrentFileName():
     today = getTodayDate()
     fileList = listFiles(INPUT_PATH)
     for item in fileList:
         itemDate = obtainDateFromFileName(item)
         if (itemDate == today):
-            return item
-    return fileList[-1]
+            print(item[0:6])
+            if (itemDate[0:6] == 'wrfout'):
+                return item
+    return fileList.pop(-1)
 
 # /*
 #   Retorna o arquivo com o caminho completo
 # */
 
 def getTodayFilePath():
-    return INPUT_PATH + getTodayFileName()
+    return INPUT_PATH + getCurrentFileName()
 
 
 # /*
@@ -70,19 +76,37 @@ def getTodayFilePath():
 # */
 
 def getGradeSize():
-    currentFile = getTodayFileName()
+    currentFile = getCurrentFileName()
     grade = currentFile[7:10]
     return grade
+
+# /*
+#   Retorna um arquivo netcdf com a grade desejada
+# */
+
+def getFileByGrade(grade):
+    list = listFiles(INPUT_PATH)
+    for item in list:
+        if item[7:10] == grade:
+            return item
+
+# /*
+#   Retorna o arquivo com caminho completo a partir da grade
+# */
+
+def getCurrentFilePathByGrade(grade):
+    item = getFileByGrade(grade)
+    return INPUT_PATH + item
 
 # /*
 #  Gera um caminho para salvar os gráficos
 # */
 
 def getSavePath(variable, grade):
-    date = obtainDateFromFileName(getTodayFileName())
+    date = obtainDateFromFileName(getCurrentFileName())
     path = OUTPUT_PATH + \
             date + "/" + \
-            getGradeSize() + '/' + \
+            grade + '/' + \
             variable + "/"
     if not os.path.exists(path):
         os.makedirs(path)

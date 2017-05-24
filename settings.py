@@ -8,6 +8,6 @@ import json
 
 # Load the configuration settings
 
-with open('script.json') as data:
+with open('/home/edson/Projetos/WRFOutputReader/script.json') as data:
     settings = json.load(data)
 

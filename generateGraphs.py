@@ -22,23 +22,13 @@ import mapManager
 
 
 """
-
+INPUT_PATH = settings['settings']['location']['input']
+OUTPUT_PATH = settings['settings']['location']['output']
 # /*
 #   A partir da grade, define determinadas configurações da projeção do mapa
 # */
 
-datasetFile = fileManager.getTodayFilePath()
-grade = fileManager.getGradeSize()
-time = settings['time']
-dataset = netCDF4.Dataset(datasetFile)
-
-xlat = dataset.variables['XLAT'][:,:,:]
-xlong = dataset.variables['XLONG'][:,:,:]
-temperature = []; lat = []; lon = []
-lon = xlong[:1, :,:].squeeze()
-lat = xlat[:1, :, :].squeeze()
-hlat, llat = np.amax(xlat), np.amin(xlat)
-hlong, llong = np.amax(xlong), np.amin(xlong)
+grades = settings['main']['grades']
 
 def getLowerValue(variable):
     varflat = variable.flatten()
@@ -65,9 +55,18 @@ def getHigherWindValue(variable, variable2):
     varhigh = np.amax(speedflat)
     return varhigh
 
-def generateGraphs(variable, token = 0):
-    
-    if (variable == "temperature"):        
+def generateGraphs(grade, variable, token = 0):
+    datasetFile = fileManager.getCurrentFilePathByGrade(grade)
+    time = settings['time']
+    dataset = netCDF4.Dataset(datasetFile)
+    if (variable == "temperature"):
+        xlat = dataset.variables['XLAT'][:,:,:]
+        xlong = dataset.variables['XLONG'][:,:,:]
+        temperature = []; lat = []; lon = []
+        lon = xlong[:1, :,:].squeeze()
+        lat = xlat[:1, :, :].squeeze()
+        hlat, llat = np.amax(xlat), np.amin(xlat)
+        hlong, llong = np.amax(xlong), np.amin(xlong)        
         var = dataset.variables['T2'][:,:,:].squeeze()
         for i in range(1, len(date)):
             
@@ -104,13 +103,13 @@ def generateGraphs(variable, token = 0):
             m = mapManager.createMap(llong, hlong, llat, hlat)
             x,y = m(lon, lat)
             m.drawcoastlines()
-            m.drawparallels(mapManager.makeParallels(grade), 
+            m.drawparallels(mapManager.makeParallels(llat, hlat, grade), 
                             linewidth=0, 
                             labels=[1,0,0,1], 
                             color='r', 
                             zorder=0, 
                             fmt="%.2f")
-            m.drawmeridians(mapManager.makeMeridians(grade), 
+            m.drawmeridians(mapManager.makeMeridians(llong, hlong, grade), 
                             linewidth=0, 
                             labels=[1,0,0,1], 
                             color='r', 
@@ -147,6 +146,16 @@ def generateGraphs(variable, token = 0):
             dataset.close()
             
     elif (variable == "pressure"):
+        datasetFile = fileManager.getCurrentFilePathByGrade(grade)
+        time = settings['time']
+        dataset = netCDF4.Dataset(datasetFile)
+        xlat = dataset.variables['XLAT'][:,:,:]
+        xlong = dataset.variables['XLONG'][:,:,:]
+        temperature = []; lat = []; lon = []
+        lon = xlong[:1, :,:].squeeze()
+        lat = xlat[:1, :, :].squeeze()
+        hlat, llat = np.amax(xlat), np.amin(xlat)
+        hlong, llong = np.amax(xlong), np.amin(xlong)
         var = dataset.variables['PSFC'][:,:,:].squeeze()
         for i in range(1, len(date)):
 
@@ -165,7 +174,7 @@ def generateGraphs(variable, token = 0):
                         fontsize = 12, 
                         ha = 'left', 
                         x = -0.01)
-            plt.suptitle("$\mathcal{mBar}$", 
+            plt.suptitle("${mBar}$", 
                         fontsize = 18, 
                         ha = 'center', 
                         x = 0.79, 
@@ -181,13 +190,13 @@ def generateGraphs(variable, token = 0):
             m = mapManager.createMap(llong, hlong, llat, hlat)
             x,y = m(lon, lat)
             m.drawcoastlines()
-            m.drawparallels(mapManager.makeParallels(grade), 
+            m.drawparallels(mapManager.makeParallels(llat, hlat, grade), 
                             linewidth=0, 
                             labels=[1,0,0,1], 
                             color='r', 
                             zorder=0, 
                             fmt="%.2f")
-            m.drawmeridians(mapManager.makeMeridians(grade), 
+            m.drawmeridians(mapManager.makeMeridians(llong, hlong, grade), 
                             linewidth=0, 
                             labels=[1,0,0,1], 
                             color='r', 
@@ -223,6 +232,16 @@ def generateGraphs(variable, token = 0):
         if (dataset):
             dataset.close()
     elif (variable == "wind"):
+        datasetFile = fileManager.getCurrentFilePathByGrade(grade)
+        time = settings['time']
+        dataset = netCDF4.Dataset(datasetFile)
+        xlat = dataset.variables['XLAT'][:,:,:]
+        xlong = dataset.variables['XLONG'][:,:,:]
+        temperature = []; lat = []; lon = []
+        lon = xlong[:1, :,:].squeeze()
+        lat = xlat[:1, :, :].squeeze()
+        hlat, llat = np.amax(xlat), np.amin(xlat)
+        hlong, llong = np.amax(xlong), np.amin(xlong)
         u10 = dataset.variables['U10'][:].squeeze()
         v10 = dataset.variables['V10'][:].squeeze()
 
@@ -288,13 +307,13 @@ def generateGraphs(variable, token = 0):
 
             m.drawcoastlines(color = '0.15')
 
-            m.drawparallels(mapManager.makeParallels(grade), 
+            m.drawparallels(mapManager.makeParallels(llat, hlat, grade), 
                             linewidth=0, 
                             labels=[1,0,0,1], 
                             color='r', 
                             zorder=0, 
                             fmt="%.2f")
-            m.drawmeridians(mapManager.makeMeridians(grade), 
+            m.drawmeridians(mapManager.makeMeridians(llong, hlong, grade), 
                             linewidth=0, 
                             labels=[1,0,0,1], 
                             color='r', 
@@ -317,6 +336,16 @@ def generateGraphs(variable, token = 0):
             plt.savefig(path + fileName, bbox_inches='tight')
             plt.close()
     elif (variable == "vapor"):
+        datasetFile = fileManager.getCurrentFilePathByGrade(grade)
+        time = settings['time']
+        dataset = netCDF4.Dataset(datasetFile)
+        xlat = dataset.variables['XLAT'][:,:,:]
+        xlong = dataset.variables['XLONG'][:,:,:]
+        temperature = []; lat = []; lon = []
+        lon = xlong[:1, :,:].squeeze()
+        lat = xlat[:1, :, :].squeeze()
+        hlat, llat = np.amax(xlat), np.amin(xlat)
+        hlong, llong = np.amax(xlong), np.amin(xlong)
         var = dataset.variables['Q2'][:,:,:].squeeze()
 
         for i in range(1, len(date)):
@@ -350,13 +379,13 @@ def generateGraphs(variable, token = 0):
             m = mapManager.createMap(llong, hlong, llat, hlat)
             x,y = m(lon, lat)
             m.drawcoastlines()
-            m.drawparallels(mapManager.makeParallels(grade), 
+            m.drawparallels(mapManager.makeParallels(llat, hlat, grade), 
                             linewidth=0, 
                             labels=[1,0,0,1], 
                             color='r', 
                             zorder=0, 
                             fmt="%.2f")
-            m.drawmeridians(mapManager.makeMeridians(grade), 
+            m.drawmeridians(mapManager.makeMeridians(llong, hlong, grade), 
                             linewidth=0, 
                             labels=[1,0,0,1], 
                             color='r', 
@@ -391,4 +420,3 @@ def generateGraphs(variable, token = 0):
         if (dataset):
             dataset.close()
     return 0
-generateGraphs('vapor')

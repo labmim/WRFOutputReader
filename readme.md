@@ -42,3 +42,5 @@
 * Replicar correções para as variáveis restantes
 * Corrigir geração de arquivos dat
 * Adicionar guia de instalação para Ubuntu, centOS, Windows e Mac
+* Melhorar desacoplamento dos métodos e classes
+* Utilizar classes

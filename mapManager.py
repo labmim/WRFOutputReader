@@ -61,7 +61,7 @@ def CorrectNumberInFileName(index):
 # Define os meridianos
 # */
 
-def makeMeridians(grade):
+def makeMeridians(llong, hlong, grade):
     if (grade == "d01"):
         return np.arange(llong, hlong, 1.3)
     elif (grade == "d02"):
@@ -73,7 +73,7 @@ def makeMeridians(grade):
 # Define os paralelos
 # */
 
-def makeParallels(grade):
+def makeParallels(llat, hlat, grade):
     if (grade == "d01"):
         return np.arange(llat, hlat, 1.1)
     elif (grade == "d02"):
