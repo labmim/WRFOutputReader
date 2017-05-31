@@ -1,4 +1,7 @@
+#coding: utf-8
 import numpy as np
+import matplotlib as mpl
+#mpl.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib import collections, axes, transforms
 import netCDF4
@@ -6,14 +9,14 @@ from os import listdir
 from datetime import datetime, timedelta
 from mpl_toolkits.basemap import Basemap
 from matplotlib import ticker
-import matplotlib as mpl
 import arrow
 
 from correctFileName import CorrectNumberInFileName
-from timeLoader import date, analysis
+import timeLoader
 from settings import settings
 import fileManager
 import mapManager
+
 
 """
 
@@ -56,9 +59,12 @@ def getHigherWindValue(variable, variable2):
     return varhigh
 
 def generateGraphs(grade, variable, token = 0):
+    
+
     datasetFile = fileManager.getCurrentFilePathByGrade(grade)
-    time = settings['time']
     dataset = netCDF4.Dataset(datasetFile)
+    analysis = timeLoader.organizeAnalysisDate(dataset.START_DATE).to('utc').format('DD/MM/YYYY HH:mm:ss')
+    date = timeLoader.arrangeDate(dataset);
     if (variable == "temperature"):
         xlat = dataset.variables['XLAT'][:,:,:]
         xlong = dataset.variables['XLONG'][:,:,:]
@@ -80,7 +86,7 @@ def generateGraphs(grade, variable, token = 0):
             # Plot Settings
             
             plt.figure(figsize=(18,9))
-            title = mapManager.createTitle('temperature', i)
+            title = mapManager.createTitle('temperature', date, i, analysis)
             plt.title(title, 
                       fontsize = 12, 
                       ha = 'left', 
@@ -146,9 +152,6 @@ def generateGraphs(grade, variable, token = 0):
             dataset.close()
             
     elif (variable == "pressure"):
-        datasetFile = fileManager.getCurrentFilePathByGrade(grade)
-        time = settings['time']
-        dataset = netCDF4.Dataset(datasetFile)
         xlat = dataset.variables['XLAT'][:,:,:]
         xlong = dataset.variables['XLONG'][:,:,:]
         temperature = []; lat = []; lon = []
@@ -169,7 +172,7 @@ def generateGraphs(grade, variable, token = 0):
 
             # Plot Setings
             plt.figure(figsize=(18,9))
-            title = mapManager.createTitle('pressure', i)
+            title = mapManager.createTitle('pressure', date, i, analysis)
             plt.title(title, 
                         fontsize = 12, 
                         ha = 'left', 
@@ -232,9 +235,6 @@ def generateGraphs(grade, variable, token = 0):
         if (dataset):
             dataset.close()
     elif (variable == "wind"):
-        datasetFile = fileManager.getCurrentFilePathByGrade(grade)
-        time = settings['time']
-        dataset = netCDF4.Dataset(datasetFile)
         xlat = dataset.variables['XLAT'][:,:,:]
         xlong = dataset.variables['XLONG'][:,:,:]
         temperature = []; lat = []; lon = []
@@ -255,7 +255,7 @@ def generateGraphs(grade, variable, token = 0):
 
             # Plot Settings
             fig = plt.figure(figsize=(18,9))
-            title = mapManager.createTitle('wind', i)
+            title = mapManager.createTitle('wind', date, i, analysis)
             plt.title(title, 
                     fontsize = 12, 
                     ha = 'left', 
@@ -336,9 +336,6 @@ def generateGraphs(grade, variable, token = 0):
             plt.savefig(path + fileName, bbox_inches='tight')
             plt.close()
     elif (variable == "vapor"):
-        datasetFile = fileManager.getCurrentFilePathByGrade(grade)
-        time = settings['time']
-        dataset = netCDF4.Dataset(datasetFile)
         xlat = dataset.variables['XLAT'][:,:,:]
         xlong = dataset.variables['XLONG'][:,:,:]
         temperature = []; lat = []; lon = []
@@ -358,7 +355,7 @@ def generateGraphs(grade, variable, token = 0):
 
             # Plot Settings 
             plt.figure(figsize=(18,9))
-            title = mapManager.createTitle('vapor', i)
+            title = mapManager.createTitle('vapor', date, i, analysis)
             plt.title(title, 
                     fontsize = 12, 
                     ha = 'left', 
