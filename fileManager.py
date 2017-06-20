@@ -1,3 +1,4 @@
+#coding: utf-8
 import os
 from settings import settings
 import arrow
@@ -57,7 +58,6 @@ def getCurrentFileName():
     for item in fileList:
         itemDate = obtainDateFromFileName(item)
         if (itemDate == today):
-            print(item[0:6])
             if (itemDate[0:6] == 'wrfout'):
                 return item
     return fileList.pop(-1)

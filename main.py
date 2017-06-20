@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+# 30 8 * * * /home/edson/Projetos/WRFOutputReader/job.sh > /home/edson/Projetos/WRFOutputReader/job.log 2>&1
 import generateGraphs as gg
 from settings import settings
 

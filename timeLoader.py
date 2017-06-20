@@ -9,9 +9,6 @@ import fileManager
 
 # dataset variables in come
 
-dataset = netCDF4.Dataset(fileManager.getTodayFilePath())
-
-times_array = dataset.variables['Times'][:]
 
 """
 
@@ -24,11 +21,6 @@ times_array = dataset.variables['Times'][:]
 
 # --- End of Dependencies ---
 
-times = times_array
-date_array = np.array([])
-date = np.array([])
-
-
 def organizeAnalysisDate(dateString):
     strDate = dateString
     currentYear = strDate[:4]
@@ -39,7 +31,7 @@ def organizeAnalysisDate(dateString):
     #currentSeconds = strDate[17:]
 
     # -- Instanciate an aware Arrow object
-    print(currentDay, currentMonth, currentYear)
+
     currentDate = arrow.Arrow(\
 				int(currentYear), \
 				int(currentMonth), \
@@ -48,8 +40,6 @@ def organizeAnalysisDate(dateString):
 				tzinfo = 'UTC')
     analysisDate = currentDate.to('America/Bahia')
     return analysisDate
-
-analysis = organizeAnalysisDate(dataset.START_DATE).to('utc').format('DD/MM/YYYY HH:mm:ss')
 
 def organizeDate(dateString):
     # -- Slicing the string
@@ -72,7 +62,11 @@ def organizeDate(dateString):
     date = currentDate.to('America/Bahia')
     return date
 
-for times in times_array:
+def arrangeDate(dataset):
+    date_array = np.array([])
+    date = np.array([])
+    times_array = dataset.variables['Times'][:]
+    for times in times_array:
     #print(times[:4])
     #print(times[5:7])
     #print(times[8:10])
@@ -80,22 +74,23 @@ for times in times_array:
     #print(type(b''.join(times.tolist()).decode('UTF-8')))
 
     # Proccess bytes to string
-    currentTime = b''.join(times.tolist()).decode('UTF-8')
-
-    cd = organizeDate(currentTime)
-
-    # -- Format current date
-
-    year = cd.format('YYYY')
-    month = cd.format('MM')
-    day = cd.format('DD')
-    hour = cd.format('HH')
-    weekday = cd.format('dddd')
-    julian = cd.format('DDD')
-    timezone = cd.format('ZZ')
-    date_array = np.append(date_array, currentTime)
-    date = np.append(date, cd)
-
+        currentTime = b''.join(times.tolist()).decode('UTF-8')
+    
+        cd = organizeDate(currentTime)
+    
+        # -- Format current date
+    
+        year = cd.format('YYYY')
+        month = cd.format('MM')
+        day = cd.format('DD')
+        hour = cd.format('HH')
+        weekday = cd.format('dddd')
+        julian = cd.format('DDD')
+        timezone = cd.format('ZZ')
+        date_array = np.append(date_array, currentTime)
+        date = np.append(date, cd)
+    
+    return date
 #
 #class TimeLoader(object):
 #    def __init__(self):

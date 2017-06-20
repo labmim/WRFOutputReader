@@ -1,7 +1,7 @@
 #coding: utf-8
 import numpy as np
 import matplotlib as mpl
-#mpl.use('Agg')
+mpl.use('Agg')
 import matplotlib.pyplot as plt
 from matplotlib import collections, axes, transforms
 import netCDF4

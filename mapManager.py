@@ -1,7 +1,6 @@
 from mpl_toolkits.basemap import Basemap
 import matplotlib.pyplot as plt
 from settings import settings
-from timeLoader import date, analysis
 import fileManager
 import numpy as np
 
@@ -24,7 +23,7 @@ def createMap(lowestLongitude, highestLongitude, lowestLatitude, highestLatitude
 # Cria um título formatado para o mapa
 # */
 
-def createTitle(variable, hour):
+def createTitle(variable, date, hour, analysis):
     model = settings['settings']['title_information']['model']
     lab = settings['settings']['title_information']['lab']
     forecast = date[hour].format(time['format'], locale=time['locale'])

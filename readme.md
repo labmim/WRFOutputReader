@@ -42,5 +42,8 @@
 * Replicar correções para as variáveis restantes
 * Corrigir geração de arquivos dat
 * Adicionar guia de instalação para Ubuntu, centOS, Windows e Mac
-* Melhorar desacoplamento dos métodos e classes
+* (Importante) Melhorar desacoplamento dos métodos e classes
 * Utilizar classes
+* Adicionar exemplo de utilização usando crontab
+* Identificar tipo de blend que é utilizado em generateGraphs
+* Adicionar no log, o tempo de cada rodada
