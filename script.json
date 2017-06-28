@@ -126,6 +126,15 @@
 			"labelpad": 10
 		},
 		"filename_extension": "LH_"
+	},
+	"SWDOWN": {
+		"title": "Radiação Global",
+		"colormap": "jet",
+		"colorbar": {
+			"label": "Radiação Global",
+			"font-size": 10,
+			"labelpad": 10
+		},
+		"filename_extension": "SWDOWN_"
 	}
-
 }
