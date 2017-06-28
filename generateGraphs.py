@@ -493,6 +493,85 @@ def generateGraphs(grade, variable, token = 0):
             
             plt.savefig(path + fileName, bbox_inches='tight')
             plt.close()
+    elif (variable == "LH"):
+        xlat = dataset.variables['XLAT'][:,:,:]
+        xlong = dataset.variables['XLONG'][:,:,:]
+        temperature = []; lat = []; lon = []
+        lon = xlong[:1, :,:].squeeze()
+        lat = xlat[:1, :, :].squeeze()
+        hlat, llat = np.amax(xlat), np.amin(xlat)
+        hlong, llong = np.amax(xlong), np.amin(xlong)
+        var = dataset.variables['Q2'][:,:,:].squeeze()
+
+        for i in range(1, len(date)):
+
+            # Settings 
+            colormap = settings['LH']['colormap']
+            varmax = getHigherValue(var)
+            varmin = getLowerValue(var)
+            mm = var[i:i+1,:,:]
+
+            # Plot Settings 
+            plt.figure(figsize=(18, 9))
+            title = mapManager.createTitle('LH', date, i, analysis)
+            plt.title(title, 
+                    fontsize = 12, 
+                    ha = 'left', 
+                    x = -0.01)
+            plt.suptitle("$ W m ^ 2 $", 
+                    fontsize = 18, 
+                    ha = 'center', 
+                    x = 0.79, 
+                    y = 0.75)
+            plt.xlabel('Longitude', 
+                    fontsize = 12, 
+                    labelpad = 25)
+            plt.ylabel('Latitude', 
+                    fontsize = 12, 
+                    labelpad = 60)
+
+            # Map Settings
+            m = mapManager.createMap(llong, hlong, llat, hlat)
+            x,y = m(lon, lat)
+            m.drawcoastlines()
+            m.drawparallels(mapManager.makeParallels(llat, hlat, grade), 
+                            linewidth=0, 
+                            labels=[1,0,0,1], 
+                            color='r', 
+                            zorder=0, 
+                            fmt="%.2f")
+            m.drawmeridians(mapManager.makeMeridians(llong, hlong, grade), 
+                            linewidth=0, 
+                            labels=[1,0,0,1], 
+                            color='r', 
+                            zorder=0, 
+                            fmt="%.2f")
+            m.contourf(x, y, np.squeeze(mm), 
+                            alpha = 0.4, 
+                            cmap = colormap, 
+                            vmin=varmin, 
+                            vmax=varmax)
+            m.pcolor(x,y,np.squeeze(mm), 
+                            alpha = 0.4,
+                            cmap = colormap, 
+                            vmin=varmin, 
+                            vmax=varmax)
+
+            # Colorbar Settings
+            cb = plt.colorbar(shrink=0.5, pad=0.04)
+            cb.ax.tick_params(labelsize=10)
+
+            # plt.show()
+
+            # Log
+            fileManager.generateLog('LH', i, grade)
+
+            # Saving Settings
+            path = fileManager.getSavePath('LH', grade)
+            fileName = fileManager.getSaveFileName('LH', i, grade)
+            
+            plt.savefig(path + fileName, bbox_inches='tight')
+            plt.close()
     if (dataset):
         dataset.close()
     return 0

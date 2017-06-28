@@ -116,6 +116,16 @@
 			"labelpad": 10
 		},
 		"filename_extension": "HFX_"
+	},
+	"LH": {
+		"title": "Calor Latente",
+		"colormap": "jet",
+		"colorbar": {
+			"label": "Calor Latente",
+			"font-size": 10,
+			"labelpad": 10
+		},
+		"filename_extension": "LH_"
 	}
 
 }
