@@ -105,9 +105,7 @@ def getCurrentFilePathByGrade(grade):
 def getSavePath(variable, grade):
     date = obtainDateFromFileName(getCurrentFileName())
     path = OUTPUT_PATH + \
-            date + "/" + \
-            grade + '/' + \
-            variable + "/"
+            date + "/"
     if not os.path.exists(path):
         os.makedirs(path)
     return path
@@ -130,7 +128,7 @@ def correctNumberInFileName(index):
 
 # variable + _ + grade + data + .png
 def getSaveFileName(variable, index, grade):
-    saveName = variable + "_" + grade + "_" + \
+    saveName = grade.upper() + "_" + settings[variable]['filename_extension'].upper() + \
     correctNumberInFileName(index) + ".png"
     return saveName
 

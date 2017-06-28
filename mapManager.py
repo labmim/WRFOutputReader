@@ -13,7 +13,7 @@ OUTPUT_PATH = settings['settings']['location']['output']
 
 def createMap(lowestLongitude, highestLongitude, lowestLatitude, highestLatitude):
     map = Basemap(rsphere=(6378137.00,6356752.3142),\
-                   resolution='h',area_thresh=0.1,projection='merc',\
+                   resolution='h',projection='merc',\
                     llcrnrlon= lowestLongitude, llcrnrlat= lowestLatitude,
                     urcrnrlon= highestLongitude, urcrnrlat= highestLatitude)
     return map

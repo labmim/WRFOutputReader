@@ -48,6 +48,7 @@
 		"wind_u": "U10",
 		"wind_v": "V10",
 		"vapor": "Q2",
+		"rain": "RAINC",
 		"time": "Times"
 	},
 	"temperature": {
@@ -95,6 +96,16 @@
 			"labelpad": 10
 		},
 		"filename_extension": "_pressure"
+	},
+    "rain": {
+		"title": "Precipitação",
+		"colormap": "jet",
+		"colorbar": {
+			"label": "Precipitação",
+			"font-size": 10,
+			"labelpad": 10
+		},
+		"filename_extension": "RAIN_"
 	}
 
 }
