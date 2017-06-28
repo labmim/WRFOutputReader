@@ -17,7 +17,6 @@ from settings import settings
 import fileManager
 import mapManager
 
-
 """
 
     As variáveis de tempo vão estar disponíveis

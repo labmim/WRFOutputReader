@@ -61,7 +61,7 @@
 			"font-size": 10,
 			"labelpad": 10
 		},
-		"filename_extension": "_temperature"
+		"filename_extension": "TEMP_"
 	},
 	"wind": {
 		"title": "Velocidade do Vento (10 m)",
@@ -71,7 +71,7 @@
 			"font-size": 10,
 			"labelpad": 10
 		},
-		"filename_extension": "_wind"
+		"filename_extension": "WIND_"
 	},
     "vapor": {
 		"title": "Umidade Específica",
@@ -83,7 +83,7 @@
 			"font-size": 10,
 			"labelpad": 10
 		},
-		"filename_extension": "_vapor"
+		"filename_extension": "VAPOR_"
 	},
 	"pressure": {
 		"title": "Pressão Atmosférica (Nível do Mar)",
@@ -95,7 +95,7 @@
 			"font-size": 10,
 			"labelpad": 10
 		},
-		"filename_extension": "_pressure"
+		"filename_extension": "PRES_"
 	},
     "rain": {
 		"title": "Precipitação",
@@ -106,6 +106,16 @@
 			"labelpad": 10
 		},
 		"filename_extension": "RAIN_"
+	},
+	"HFX": {
+		"title": "Calor Sensível",
+		"colormap": "jet",
+		"colorbar": {
+			"label": "Calor Sensível",
+			"font-size": 10,
+			"labelpad": 10
+		},
+		"filename_extension": "HFX_"
 	}
 
 }
