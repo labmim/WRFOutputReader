@@ -1,6 +1,6 @@
 {
 	"main": {
-		"variables": ["temperature", "wind", "vapor", "pressure"],
+		"variables": ["temperature", "pressure", "vapor", "wind", "HFX", "LH", "rain", "SWDOWN"],
          "grades": ["d01", "d02", "d03"]
 	},
 	"settings": {
