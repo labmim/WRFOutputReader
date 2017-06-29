@@ -651,6 +651,6 @@ def generateGraphs(grade, variable, token = 0):
             
             plt.savefig(path + fileName, bbox_inches='tight')
             plt.close()
-    if (dataset):
-        dataset.close()
+        if (dataset):
+            dataset.close()
     return 0

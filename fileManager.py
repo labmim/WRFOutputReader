@@ -24,7 +24,7 @@ def getTodayDate():
 #   Retorna a lista de arquivos .nc
 # */
 
-def listFiles(path):
+def listFiles(path, verbose = False):
     ncList = []
     fileList = os.listdir(path)
     for file in fileList:
@@ -32,8 +32,10 @@ def listFiles(path):
 #            ncList.append(file)
         if file[0:6] == FILE_INFORMATION['base']:
             ncList.append(file)
-    ncList.sort()
-    return ncList
+    thisList = sorted(ncList)
+    if (verbose):
+        print(thisList)
+    return thisList
 
 # /*
 #   Retorna a data de um dado arquivo a partir do nome
@@ -89,7 +91,6 @@ def getFileByGrade(grade):
     for item in list:
         if item[7:10] == grade:
             return item
-
 # /*
 #   Retorna o arquivo com caminho completo a partir da grade
 # */
