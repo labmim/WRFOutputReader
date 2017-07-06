@@ -24,7 +24,7 @@ from mpl_toolkits.basemap import Basemap
 from matplotlib import ticker
 import matplotlib as mpl
 
-dataset = netCDF4.Dataset('Files/wrfout_d01_2016-10-06_00_00_00')
+dataset = netCDF4.Dataset('../input/wrfout_d03_2017-06-26.nc')
 
 xlat = dataset.variables['XLAT'][:,:,:]# 10
 xlong = dataset.variables['XLONG'][:,:,:] # 12
@@ -90,7 +90,7 @@ model = "WRF V3"
 analysis = dataset.START_DATE
 forecast = "11/01/2017 (Quarta-feira) Horário: 8HL"
 title = model + " — " + lab + "\n" + analysis + "\n" + forecast
-for i in range(0, 97):
+for i in range(1, 97):
     plt.figure(figsize=(18,9))
     m = Basemap( #rsphere=(6378137.00,6356752.3142),\
                 resolution='h',area_thresh=0.1,projection='merc',\
@@ -129,7 +129,7 @@ for i in range(0, 97):
 #    m.plot(u, v, 'bo', markersize=4, color='white')
     
     ulons = xlong[:1, :,25:26].squeeze()[0]
-    vlats = xlat[:1, 15:16, :].squeeze()[0]
+    vlats = xlat[:1, 14:15, :].squeeze()[0]
     ##-38.5025 -13.0076
     u, v = m(ulons, vlats)
     m.plot(u, v, 'bo', markersize=4, color='white')

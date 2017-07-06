@@ -21,7 +21,7 @@ import statistics as stats
 # Variables
 # T2, TH2, G2, V10, U10, PSFC
 
-dataset = netCDF4.Dataset('wrfout_d03_2017-01-05_00_00_00')
+dataset = netCDF4.Dataset('../input/wrfout_d03_2017-06-26.nc')
 
 xlat = dataset.variables['XLAT'][:,:,:]
 xlong = dataset.variables['XLONG'][:,:,:]

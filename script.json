@@ -87,7 +87,7 @@
 	},
 	"pressure": {
 		"title": "Pressão Atmosférica (Nível do Mar)",
-		"colormap": "YlOrRd",
+		"colormap": "Blues",
 		"modifier": 100,
 		"modifier_operation": "divide",
 		"colorbar": {
