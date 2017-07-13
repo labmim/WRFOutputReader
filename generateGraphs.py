@@ -523,7 +523,7 @@ def generateGraphs(grade, variable, token = 0):
                     fontsize = 12, 
                     ha = 'left', 
                     x = -0.01)
-            plt.suptitle("$ W m ^ 2 $", 
+            plt.suptitle("$ W m ^ {-2} $", 
                     fontsize = 18, 
                     ha = 'center', 
                     x = 0.79, 
@@ -602,7 +602,7 @@ def generateGraphs(grade, variable, token = 0):
                     fontsize = 12, 
                     ha = 'left', 
                     x = -0.01)
-            plt.suptitle("$ W m ^ 2 $", 
+            plt.suptitle("$ W m ^ {-2} $",
                     fontsize = 18, 
                     ha = 'center', 
                     x = 0.79, 
@@ -681,7 +681,7 @@ def generateGraphs(grade, variable, token = 0):
                     fontsize = 12, 
                     ha = 'left', 
                     x = -0.01)
-            plt.suptitle("$ W m ^ 2 $", 
+            plt.suptitle("$ W m ^ {-2} $", 
                     fontsize = 18, 
                     ha = 'center', 
                     x = 0.79, 

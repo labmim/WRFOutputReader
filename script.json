@@ -13,7 +13,7 @@
 		},
 		"location":{
 			"input":"/home/edson/d-wrf-op/WRFV3/test/em_real/",
-			"output":"/home/edson/Projetos/WRFOutputReader/output/"
+			"output":"/home/edson/d-wrf-op/py-output/"
 		},
 		"title_information": {
 			"lab": "LabMiM/LMAC (UFBA)",
