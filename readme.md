@@ -1,13 +1,10 @@
 ##### Changelog - Últimas Alterações
 
-Semana 3 de Junho à 7 de Junho de 2017
+Semana 10 de Julho à 14 de julho de 2017
 
-+ Adição do script para criação gifs
-+ Gerados gifs
-+ Alteração no colormap da variável Pressão
-+ Adição de 'Últimas Alterações' no Projeto
-+ Verificado ponto utilizado ([15:16, 25:26])
-+ Atualizado .gitignore
++ Atualizado código para remoção dos caminhos
++ Limpeza para commit
++ Atualizado readme
 
 #### Instalação - centOS
 #### Instalação - MacOS
@@ -49,7 +46,6 @@ Semana 3 de Junho à 7 de Junho de 2017
 #### Necessário fazer
 
 * Corrigir warnings relativos às mudanças de API na versão 2.0 do matplotlib
-* Replicar correções para as variáveis restantes
 * Corrigir geração de arquivos dat
 * Adicionar guia de instalação para Ubuntu, centOS, Windows e Mac
 * (Importante) Melhorar desacoplamento dos métodos e classes
