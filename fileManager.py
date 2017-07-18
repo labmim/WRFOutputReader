@@ -106,8 +106,7 @@ def getCurrentFilePathByGrade(grade):
 
 def getSavePath(variable, grade):
     date = obtainDateFromFileName(getCurrentFileName())
-    path = OUTPUT_PATH + \
-            date + "/"
+    path = OUTPUT_PATH
     if not os.path.exists(path):
         os.makedirs(path)
     return path
@@ -117,6 +116,7 @@ def getSavePath(variable, grade):
 # */
 
 def deleteSavePath(folder):
+    #print("Deleting folders")
     for the_file in os.listdir(folder):
         file_path = os.path.join(folder, the_file)
         try:

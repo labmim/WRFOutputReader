@@ -13,7 +13,7 @@ grades = settings['main']['grades']
 #   serão gerados seus respectivos mapas
 # */
 
-fm.deleteSavePath(location)
+#fm.deleteSavePath(location)
 
 print("The current grades are:")
 for grade in grades:
